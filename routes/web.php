@@ -1,11 +1,27 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectsController;
+use App\Http\Controllers\TasksController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Tasks controller
+Route::middleware('auth')->group(function () {
+    Route::get('/tasks', [TasksController::class, 'index'])->name('tasks.index');
+});
+
+
+// Projects controller
+Route::middleware('auth')->group(function () {
+    Route::get('/projects', [ProjectsController::class, 'index'])->name('projects.index');
+});
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -17,4 +33,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
